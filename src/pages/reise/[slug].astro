@@ -1,0 +1,210 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ImageOrPlaceholder from '../../components/ImageOrPlaceholder.astro';
+import HotelInfo from '../../components/HotelInfo.astro';
+import BaliMap from '../../components/BaliMap.astro';
+import DayPlanner from '../../components/DayPlanner.astro';
+import RestaurantList from '../../components/RestaurantList.astro';
+import { stations } from '../../data/stations';
+import { nightsLabel } from '../../lib/format';
+
+export function getStaticPaths() {
+	return stations.map((station, i) => ({
+		params: { slug: station.slug },
+		props: {
+			station,
+			prev: stations[i - 1],
+			next: stations[i + 1],
+		},
+	}));
+}
+
+const { station, prev, next } = Astro.props;
+
+function formatDate(iso: string) {
+	return new Date(iso).toLocaleDateString('de-CH', { day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+---
+
+<Layout title={station.name} description={station.intro}>
+	<section class={`station-hero accent-${station.accent}`}>
+		<div class="container station-hero-inner">
+			<div class="station-hero-image">
+				<ImageOrPlaceholder
+					relPath={`images/${station.slug}`}
+					icon={station.icon}
+					label={station.name}
+					accent={station.accent}
+					aspect="16 / 9"
+				/>
+			</div>
+			<div class="station-hero-text">
+				<span class="eyebrow">
+					{formatDate(station.dateRange.start)} – {formatDate(station.dateRange.end)} · {nightsLabel(station.nights)}
+				</span>
+				<h1>{station.name}</h1>
+				<p>{station.tagline}</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section intro-section">
+		<div class="container">
+			<p class="intro-text">{station.intro}</p>
+		</div>
+	</section>
+
+	<section class="section map-section">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">Wo wir sind</span>
+				<h2>Karte</h2>
+			</div>
+			<BaliMap activeSlug={station.slug} />
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container hotel-area-grid">
+			<div>
+				<h2>Hotel</h2>
+				<HotelInfo hotel={station.hotel} />
+			</div>
+			<div>
+				<h2>Standort</h2>
+				<div class="card card-pad">
+					<p class="area-text">{station.area}</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">Tag für Tag</span>
+				<h2>Aktivitäten planen</h2>
+				<p>Plant Aktivitäten aus dem Pool auf eure Tage ein — der Fortschritt bleibt auf diesem Gerät gespeichert.</p>
+			</div>
+			<DayPlanner
+				storageKey={`bali-trip:v1:activities:${station.slug}`}
+				days={station.nights + 1}
+				dayNotes={station.itinerary}
+				activities={station.activities}
+			/>
+		</div>
+	</section>
+
+	{
+		station.restaurants.length > 0 && (
+			<section class="section restaurants-section">
+				<div class="container">
+					<div class="section-head">
+						<span class="eyebrow">Zum Essen</span>
+						<h2>Restaurant-Tipps</h2>
+					</div>
+					<div class="card card-pad">
+						<RestaurantList restaurants={station.restaurants} />
+					</div>
+				</div>
+			</section>
+		)
+	}
+
+	<nav class="station-pager">
+		<div class="container station-pager-inner">
+			{
+				prev ? (
+					<a class="btn btn-ghost" href={`/reise/${prev.slug}`}>
+						← {prev.name}
+					</a>
+				) : (
+					<a class="btn btn-ghost" href="/reise">
+						← Route
+					</a>
+				)
+			}
+			{
+				next && (
+					<a class="btn btn-ghost" href={`/reise/${next.slug}`}>
+						{next.name} →
+					</a>
+				)
+			}
+		</div>
+	</nav>
+</Layout>
+
+<style>
+	.station-hero {
+		background: var(--accent-tint);
+		padding-block: 2.5rem;
+	}
+
+	.station-hero-inner {
+		display: grid;
+		grid-template-columns: 1.1fr 1fr;
+		gap: 2.5rem;
+		align-items: center;
+	}
+
+	.station-hero-image {
+		border-radius: var(--radius-card);
+		overflow: hidden;
+		box-shadow: var(--shadow-card);
+	}
+
+	.station-hero-text .eyebrow {
+		color: var(--accent-dark);
+	}
+
+	.station-hero-text p {
+		font-size: 1.1rem;
+		color: var(--color-ink-soft);
+	}
+
+	.intro-section {
+		padding-block: 2.5rem 0;
+	}
+
+	.intro-text {
+		font-family: var(--font-heading);
+		font-size: 1.3rem;
+		line-height: 1.5;
+		color: var(--color-jungle-dark);
+		max-width: 46rem;
+		margin: 0;
+	}
+
+	.hotel-area-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 2rem;
+	}
+
+	.area-text {
+		margin: 0;
+		color: var(--color-ink-soft);
+	}
+
+	.station-pager {
+		border-top: 1px solid var(--color-border);
+		padding-block: 2rem;
+	}
+
+	.station-pager-inner {
+		display: flex;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+
+	@media (max-width: 55rem) {
+		.station-hero-inner {
+			grid-template-columns: 1fr;
+		}
+
+		.hotel-area-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

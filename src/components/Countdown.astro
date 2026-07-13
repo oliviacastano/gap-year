@@ -1,0 +1,61 @@
+---
+interface Props {
+	target: string;
+}
+
+const { target } = Astro.props;
+---
+
+<countdown-island target={target}>
+	<div class="countdown-grid" data-grid>
+		<div class="countdown-unit"><span data-unit="days">0</span><small>Tage</small></div>
+		<div class="countdown-unit"><span data-unit="hours">00</span><small>Std</small></div>
+		<div class="countdown-unit"><span data-unit="minutes">00</span><small>Min</small></div>
+		<div class="countdown-unit"><span data-unit="seconds">00</span><small>Sek</small></div>
+	</div>
+	<p class="countdown-done" data-done hidden>Wir sind unterwegs! 🌺</p>
+</countdown-island>
+<script src="../scripts/countdown-island.ts"></script>
+
+<style>
+	.countdown-grid {
+		display: flex;
+		gap: 0.9rem;
+		flex-wrap: wrap;
+	}
+
+	.countdown-unit {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		min-width: 4.4rem;
+		padding: 0.75rem 0.5rem;
+		background: var(--color-white);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-soft);
+	}
+
+	.countdown-unit span {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 1.8rem;
+		color: var(--color-terracotta-dark);
+		line-height: 1;
+	}
+
+	.countdown-unit small {
+		font-size: 0.7rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--color-ink-soft);
+		margin-top: 0.3rem;
+	}
+
+	.countdown-done {
+		font-family: var(--font-heading);
+		font-size: 1.4rem;
+		color: var(--color-jungle-dark);
+	}
+</style>

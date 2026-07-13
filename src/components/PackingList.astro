@@ -1,0 +1,75 @@
+---
+import type { PackingCategory } from '../data/types';
+import ProgressBar from './ProgressBar.astro';
+
+interface Props {
+	categories: PackingCategory[];
+}
+
+const { categories } = Astro.props;
+const seedJson = JSON.stringify(categories).replace(/</g, '\\u003c');
+---
+
+<packing-list-island>
+	<script type="application/json" data-seed is:inline set:html={seedJson} />
+	<ProgressBar />
+	<div class="packing-categories">
+		{
+			categories.map((cat) => (
+				<div class="packing-category card card-pad">
+					<div class="packing-category-head">
+						<h3>
+							<span class="packing-category-icon">{cat.icon}</span> {cat.label}
+						</h3>
+						<span class="packing-category-count" data-category-count={cat.id}>
+							0/0
+						</span>
+					</div>
+					<ul class="checklist" data-category={cat.id} />
+					<form class="checklist-add" data-category={cat.id}>
+						<input type="text" name="label" placeholder="Neuer Punkt…" autocomplete="off" />
+						<button type="submit" aria-label="Hinzufügen">
+							+
+						</button>
+					</form>
+				</div>
+			))
+		}
+	</div>
+</packing-list-island>
+<script src="../scripts/packing-list-island.ts"></script>
+
+<style>
+	.packing-categories {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+		gap: 1.5rem;
+		margin-top: 2rem;
+	}
+
+	.packing-category-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.75rem;
+		margin-bottom: 1rem;
+	}
+
+	.packing-category-head h3 {
+		margin: 0;
+	}
+
+	.packing-category-icon {
+		margin-right: 0.3em;
+	}
+
+	.packing-category-count {
+		flex: none;
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--color-ink-soft);
+		background: var(--color-sand);
+		padding: 0.2rem 0.6rem;
+		border-radius: var(--radius-pill);
+	}
+</style>

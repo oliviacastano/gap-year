@@ -1,0 +1,49 @@
+---
+import type { ActivityItem, DayPlanEntry } from '../data/types';
+
+interface Props {
+	storageKey: string;
+	days: number;
+	dayNotes: DayPlanEntry[];
+	activities: ActivityItem[];
+}
+
+const { storageKey, days, dayNotes, activities } = Astro.props;
+const seedJson = JSON.stringify({ days, dayNotes, activities }).replace(/</g, '\\u003c');
+---
+
+<day-planner-island data-storage-key={storageKey}>
+	<script type="application/json" data-seed is:inline set:html={seedJson} />
+
+	<h3>Tagesplan</h3>
+	<div class="day-columns" data-days></div>
+
+	<div class="activity-pool">
+		<h3>Weitere Aktivitäten</h3>
+		<p class="activity-pool-lede">Ideen, die noch keinem Tag zugeordnet sind — Tag wählen und einplanen.</p>
+		<ul class="checklist" data-pool></ul>
+		<form class="checklist-add" data-add-pool>
+			<input type="text" name="label" placeholder="Neue Aktivität…" autocomplete="off" />
+			<button type="submit" aria-label="Hinzufügen">+</button>
+		</form>
+	</div>
+</day-planner-island>
+<script src="../scripts/day-planner-island.ts"></script>
+
+<style>
+	.day-columns {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+		gap: 1.25rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.activity-pool {
+		margin-top: 1rem;
+	}
+
+	.activity-pool-lede {
+		color: var(--color-ink-soft);
+		font-size: 0.9rem;
+	}
+</style>

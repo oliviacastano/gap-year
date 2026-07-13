@@ -1,0 +1,22 @@
+---
+import type { ActivityItem } from '../data/types';
+
+interface Props {
+	storageKey: string;
+	items: ActivityItem[];
+	addLabel?: string;
+}
+
+const { storageKey, items, addLabel = 'Neue Aktivität…' } = Astro.props;
+const seedJson = JSON.stringify(items).replace(/</g, '\\u003c');
+---
+
+<checklist-island data-storage-key={storageKey}>
+	<script type="application/json" data-seed is:inline set:html={seedJson} />
+	<ul class="checklist"></ul>
+	<form class="checklist-add">
+		<input type="text" name="label" placeholder={addLabel} autocomplete="off" />
+		<button type="submit" aria-label="Hinzufügen">+</button>
+	</form>
+</checklist-island>
+<script src="../scripts/checklist-island.ts"></script>

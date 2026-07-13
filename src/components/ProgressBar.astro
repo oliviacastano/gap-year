@@ -1,0 +1,38 @@
+---
+---
+
+<div class="progress-hero card card-pad">
+	<div class="progress-hero-stat">
+		<span class="progress-hero-percent" data-percent>0%</span>
+		<span class="progress-hero-label" data-progress-label>0/0 gepackt</span>
+	</div>
+	<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+		<div class="progress-bar-fill" data-fill></div>
+	</div>
+</div>
+
+<style>
+	.progress-hero {
+		margin-bottom: 2rem;
+	}
+
+	.progress-hero-stat {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+		margin-bottom: 0.9rem;
+	}
+
+	.progress-hero-percent {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 2.4rem;
+		color: var(--color-terracotta-dark);
+		line-height: 1;
+	}
+
+	.progress-hero-label {
+		font-weight: 600;
+		color: var(--color-ink-soft);
+	}
+</style>

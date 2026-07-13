@@ -1,0 +1,596 @@
+:root {
+  /* Palette */
+  --color-terracotta: #d9683a;
+  --color-terracotta-dark: #b8502a;
+  --color-terracotta-tint: #f7e2d3;
+
+  --color-ocean: #0f6e7d;
+  --color-ocean-dark: #0a4f5c;
+  --color-ocean-tint: #d9edee;
+
+  --color-jungle: #2a4a3a;
+  --color-jungle-dark: #1c3428;
+  --color-jungle-tint: #dee8de;
+
+  --color-sand: #f6ecdd;
+  --color-sand-dark: #ead9bd;
+  --color-white: #fffaf3;
+
+  --color-ink: #2c241c;
+  --color-ink-soft: #6b5f52;
+  --color-border: #e6d8c3;
+
+  --color-success: #4b7a4f;
+  --color-warning: #c17a2b;
+
+  /* Type */
+  --font-heading: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* Shape & shadow */
+  --radius-card: 1.5rem;
+  --radius-md: 0.9rem;
+  --radius-pill: 999px;
+  --shadow-card: 0 12px 30px -14px rgba(44, 36, 28, 0.25);
+  --shadow-soft: 0 4px 14px -6px rgba(44, 36, 28, 0.18);
+
+  /* Layout */
+  --container-width: 74rem;
+  --space-section: clamp(3rem, 6vw, 6rem);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-sand);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+  color: var(--color-jungle-dark);
+}
+
+h1 {
+  font-size: clamp(2.4rem, 5vw + 1rem, 4.2rem);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 2.5vw + 1rem, 2.6rem);
+}
+
+h3 {
+  font-size: clamp(1.3rem, 1.2vw + 1rem, 1.6rem);
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+/* Layout helpers */
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+.section {
+  padding-block: var(--space-section);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-terracotta-dark);
+  margin-bottom: 0.75rem;
+}
+
+.section-head {
+  margin-bottom: 2.5rem;
+  max-width: 40rem;
+}
+
+.section-head p {
+  color: var(--color-ink-soft);
+  font-size: 1.05rem;
+}
+
+/* Cards */
+
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--color-border);
+}
+
+.card-pad {
+  padding: 1.75rem;
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: var(--radius-pill);
+  padding: 0.7em 1.4em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: var(--color-terracotta);
+  color: var(--color-white);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-primary:hover {
+  background: var(--color-terracotta-dark);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--color-border);
+  color: var(--color-ink);
+}
+
+.btn-ghost:hover {
+  background: var(--color-white);
+  border-color: var(--color-ocean);
+}
+
+/* Badges / status pills */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3em 0.85em;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+
+.badge-gebucht {
+  background: var(--color-jungle-tint);
+  color: var(--color-jungle-dark);
+}
+
+.badge-offen {
+  background: var(--color-terracotta-tint);
+  color: var(--color-terracotta-dark);
+}
+
+.badge-storniert {
+  background: #eee;
+  color: var(--color-ink-soft);
+  text-decoration: line-through;
+}
+
+/* Accent utility (used by placeholder tiles, timeline nodes, etc.) */
+
+.accent-terracotta {
+  --accent: var(--color-terracotta);
+  --accent-dark: var(--color-terracotta-dark);
+  --accent-tint: var(--color-terracotta-tint);
+}
+
+.accent-ocean {
+  --accent: var(--color-ocean);
+  --accent-dark: var(--color-ocean-dark);
+  --accent-tint: var(--color-ocean-tint);
+}
+
+.accent-jungle {
+  --accent: var(--color-jungle);
+  --accent-dark: var(--color-jungle-dark);
+  --accent-tint: var(--color-jungle-tint);
+}
+
+.accent-sand {
+  --accent: var(--color-sand-dark);
+  --accent-dark: var(--color-ink-soft);
+  --accent-tint: var(--color-white);
+}
+
+/* Placeholder image tile */
+
+.placeholder-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  height: 100%;
+  min-height: 10rem;
+  color: var(--color-white);
+  background: radial-gradient(120% 140% at 20% 15%, color-mix(in srgb, var(--accent) 55%, white) 0%, var(--accent) 45%, var(--accent-dark) 100%);
+  overflow: hidden;
+}
+
+.placeholder-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(120deg, rgba(255, 255, 255, 0.08) 0, rgba(255, 255, 255, 0.08) 2px, transparent 2px, transparent 22px);
+  pointer-events: none;
+}
+
+.placeholder-tile .placeholder-icon {
+  font-size: 2.4rem;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+}
+
+.placeholder-tile .placeholder-label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.15rem;
+  text-align: center;
+  padding-inline: 1rem;
+}
+
+.placeholder-tile .placeholder-note {
+  font-size: 0.7rem;
+  opacity: 0.75;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Checklist islands */
+
+.checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.checklist-item input[type='checkbox'] {
+  appearance: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: none;
+  margin-top: 0.1rem;
+  border: 2px solid var(--color-ocean);
+  border-radius: 0.4rem;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+}
+
+.checklist-item input[type='checkbox']::before {
+  content: '';
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 0.2rem;
+  transform: scale(0);
+  transition: transform 0.12s ease;
+  background: var(--color-ocean);
+}
+
+.checklist-item input[type='checkbox']:checked::before {
+  transform: scale(1);
+}
+
+.checklist-item .checklist-text {
+  flex: 1;
+}
+
+.checklist-item .checklist-label {
+  font-weight: 500;
+  display: block;
+}
+
+.checklist-item .checklist-desc {
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+}
+
+.checklist-item.is-done .checklist-label {
+  text-decoration: line-through;
+  color: var(--color-ink-soft);
+}
+
+.checklist-item .checklist-remove {
+  flex: none;
+  border: none;
+  background: transparent;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.2rem 0.4rem;
+  border-radius: var(--radius-md);
+}
+
+.checklist-item .checklist-remove:hover {
+  background: var(--color-sand);
+  color: var(--color-terracotta-dark);
+}
+
+.checklist-add {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.checklist-add input {
+  flex: 1;
+  padding: 0.65rem 0.9rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border);
+  font-family: inherit;
+  font-size: 0.95rem;
+  background: var(--color-white);
+}
+
+.checklist-add input:focus-visible,
+.checklist-item input[type='checkbox']:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-ocean);
+  outline-offset: 2px;
+}
+
+.checklist-add button {
+  flex: none;
+  width: 2.6rem;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-ocean);
+  color: var(--color-white);
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.checklist-add button:hover {
+  background: var(--color-ocean-dark);
+}
+
+/* Progress bar */
+
+.progress-bar {
+  width: 100%;
+  height: 0.6rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-sand-dark);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-terracotta), var(--color-ocean));
+  border-radius: var(--radius-pill);
+  transition: width 0.25s ease;
+  width: 0%;
+}
+
+/* Budget rows */
+
+.budget-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem 1rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.budget-row-info {
+  flex: 1 1 12rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.budget-row-name {
+  font-weight: 500;
+}
+
+.budget-note {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-warning);
+}
+
+.budget-row-amount {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-left: auto;
+}
+
+.budget-currency {
+  font-size: 0.8rem;
+  color: var(--color-ink-soft);
+  font-weight: 600;
+}
+
+.budget-row-amount input[type='number'] {
+  width: 6.5rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  font-family: inherit;
+  text-align: right;
+  background: var(--color-white);
+}
+
+.budget-remove {
+  border: none;
+  background: transparent;
+  color: var(--color-ink-soft);
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.2rem 0.4rem;
+  flex: none;
+}
+
+.budget-remove:hover {
+  color: var(--color-terracotta-dark);
+}
+
+/* Day planner */
+
+.checklist-booking {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-ocean-dark);
+  margin-top: 0.25rem;
+}
+
+.checklist-booking a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.day-planner-item {
+  flex-wrap: wrap;
+}
+
+.day-planner-item .checklist-text {
+  flex: 1 1 60%;
+  min-width: 12rem;
+}
+
+.day-planner-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.day-planner-actions select {
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  font-family: inherit;
+  font-size: 0.85rem;
+  background: var(--color-white);
+}
+
+.day-planner-actions .btn {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+.day-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.day-card-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.day-card-number {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--color-terracotta-dark);
+  font-size: 1rem;
+  flex: none;
+}
+
+.day-card-note {
+  font-size: 1rem;
+}
+
+.day-card-note-desc {
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  margin: 0;
+}
+
+.day-card-list {
+  gap: 0.5rem;
+}
+
+.day-card-empty {
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  font-style: italic;
+  margin: 0;
+}
+
+@media (max-width: 40rem) {
+  .section {
+    padding-block: clamp(2.5rem, 10vw, 3.5rem);
+  }
+}

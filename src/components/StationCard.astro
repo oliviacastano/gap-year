@@ -1,0 +1,73 @@
+---
+import type { StationData } from '../data/types';
+import ImageOrPlaceholder from './ImageOrPlaceholder.astro';
+import { formatDateShort, nightsLabel } from '../lib/format';
+
+interface Props {
+	station: StationData;
+	index?: number;
+}
+
+const { station, index } = Astro.props;
+const formatDate = formatDateShort;
+---
+
+<a class={`station-card card accent-${station.accent}`} href={`/reise/${station.slug}`}>
+	<div class="station-card-image">
+		<ImageOrPlaceholder
+			relPath={`images/${station.slug}`}
+			icon={station.icon}
+			label={station.name}
+			accent={station.accent}
+		/>
+	</div>
+	<div class="station-card-body">
+		{index !== undefined && <span class="eyebrow">Station {index + 1}</span>}
+		<h3>{station.name}</h3>
+		<p class="station-card-dates">
+			{formatDate(station.dateRange.start)} – {formatDate(station.dateRange.end)} · {nightsLabel(station.nights)}
+		</p>
+		<p class="station-card-tagline">{station.tagline}</p>
+	</div>
+</a>
+
+<style>
+	.station-card {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		color: inherit;
+		overflow: hidden;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.station-card:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--shadow-card);
+	}
+
+	.station-card-image {
+		border-radius: var(--radius-card) var(--radius-card) 0 0;
+	}
+
+	.station-card-body {
+		padding: 1.25rem 1.4rem 1.5rem;
+	}
+
+	.station-card-body h3 {
+		margin-bottom: 0.15rem;
+	}
+
+	.station-card-dates {
+		font-size: 0.85rem;
+		color: var(--accent-dark);
+		font-weight: 600;
+		margin-bottom: 0.4rem;
+	}
+
+	.station-card-tagline {
+		font-size: 0.9rem;
+		color: var(--color-ink-soft);
+		margin-bottom: 0;
+	}
+</style>

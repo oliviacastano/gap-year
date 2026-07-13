@@ -1,11 +1,85 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+import Countdown from '../components/Countdown.astro';
+import TripTimeline from '../components/TripTimeline.astro';
+import ImageOrPlaceholder from '../components/ImageOrPlaceholder.astro';
+import { trip } from '../data/trip';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+function formatDate(iso: string) {
+	return new Date(iso).toLocaleDateString('de-CH', { day: '2-digit', month: 'long', year: 'numeric' });
+}
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Start">
+	<section class="hero section">
+		<div class="container hero-inner">
+			<span class="eyebrow">25.08. – 12.09.2026</span>
+			<h1>Unser Bali-Abenteuer</h1>
+			<p class="hero-lede">
+				Von Canggu über die Reisfelder Ubuds, Gili Trawangan und Nusa Penida bis zu den
+				Klippen von Uluwatu — hier findet ihr die ganze Route, alle Hotels, Aktivitäten,
+				Restaurant-Tipps, die Packliste und das Budget an einem Ort.
+			</p>
+			<p class="hero-dates">
+				{formatDate(trip.dateRange.start)} – {formatDate(trip.dateRange.end)}
+			</p>
+			<Countdown target={trip.countdownTargetISO} />
+		</div>
+	</section>
+
+	<section class="hero-image-section">
+		<div class="container">
+			<div class="hero-image">
+				<ImageOrPlaceholder relPath="images/hero" icon="🌺" label="Bali" accent="ocean" aspect="21 / 9" />
+			</div>
+		</div>
+	</section>
+
+	<section class="section stations-section">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">Unsere Route</span>
+				<h2>Fünf Stationen, ein Abenteuer</h2>
+				<p>Klickt auf eine Station für Hotel, Tagesplan, Aktivitäten und Restaurant-Tipps.</p>
+			</div>
+			<TripTimeline variant="mini" />
+			<div class="stations-cta">
+				<a class="btn btn-ghost" href="/reise">Ganze Route ansehen →</a>
+			</div>
+		</div>
+	</section>
 </Layout>
+
+<style>
+	.hero-inner {
+		max-width: 42rem;
+	}
+
+	.hero-lede {
+		font-size: 1.1rem;
+		color: var(--color-ink-soft);
+	}
+
+	.hero-dates {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1.3rem;
+		color: var(--color-jungle-dark);
+		margin-bottom: 1.5rem;
+	}
+
+	.hero-image-section {
+		padding-bottom: var(--space-section);
+	}
+
+	.hero-image {
+		border-radius: var(--radius-card);
+		overflow: hidden;
+		box-shadow: var(--shadow-card);
+	}
+
+	.stations-cta {
+		margin-top: 2.5rem;
+		text-align: center;
+	}
+</style>

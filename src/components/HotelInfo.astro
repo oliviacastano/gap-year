@@ -1,0 +1,66 @@
+---
+import type { Hotel } from '../data/types';
+
+interface Props {
+	hotel: Hotel;
+}
+
+const { hotel } = Astro.props;
+
+function formatDate(iso: string) {
+	return new Date(iso).toLocaleDateString('de-CH', { day: '2-digit', month: '2-digit', year: 'numeric' });
+}
+
+const statusLabel: Record<Hotel['status'], string> = {
+	gebucht: 'Gebucht',
+	offen: 'Noch offen',
+	storniert: 'Storniert',
+};
+---
+
+<div class="hotel-info card card-pad">
+	<div class="hotel-info-head">
+		<h3>{hotel.name}</h3>
+		<span class={`badge badge-${hotel.status}`}>{statusLabel[hotel.status]}</span>
+	</div>
+	<p class="hotel-dates">
+		{formatDate(hotel.dateRange.start)} – {formatDate(hotel.dateRange.end)}
+	</p>
+	<p class="hotel-price">
+		{hotel.priceCHF !== null ? `CHF ${hotel.priceCHF.toFixed(2)}` : 'Preis noch offen'}
+	</p>
+	{hotel.notes && <p class="hotel-notes">{hotel.notes}</p>}
+</div>
+
+<style>
+	.hotel-info-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.hotel-info-head h3 {
+		margin-bottom: 0;
+	}
+
+	.hotel-dates {
+		color: var(--color-ink-soft);
+		margin-bottom: 0.25rem;
+	}
+
+	.hotel-price {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1.3rem;
+		color: var(--color-terracotta-dark);
+		margin-bottom: 0;
+	}
+
+	.hotel-notes {
+		font-size: 0.85rem;
+		color: var(--color-ink-soft);
+		margin: 0.4rem 0 0;
+	}
+</style>

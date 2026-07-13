@@ -1,0 +1,46 @@
+---
+import { findPublicImage } from '../lib/images';
+import type { AccentColor } from '../data/types';
+
+interface Props {
+	/** public/ path without extension, e.g. 'images/canggu' */
+	relPath: string;
+	icon: string;
+	label: string;
+	accent: AccentColor;
+	aspect?: string;
+}
+
+const { relPath, icon, label, accent, aspect = '4 / 3' } = Astro.props;
+const src = findPublicImage(relPath);
+---
+
+<div class="image-or-placeholder" style={`aspect-ratio: ${aspect};`}>
+	{
+		src ? (
+			<img src={src} alt={label} loading="lazy" />
+		) : (
+			<div class={`placeholder-tile accent-${accent}`}>
+				<span class="placeholder-icon" aria-hidden="true">
+					{icon}
+				</span>
+				<span class="placeholder-label">{label}</span>
+				<span class="placeholder-note">Platzhalter</span>
+			</div>
+		)
+	}
+</div>
+
+<style>
+	.image-or-placeholder {
+		width: 100%;
+		border-radius: inherit;
+		overflow: hidden;
+	}
+
+	.image-or-placeholder img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+</style>

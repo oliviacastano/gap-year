@@ -1,0 +1,18 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PackingList from '../components/PackingList.astro';
+import { packing } from '../data/packing';
+---
+
+<Layout title="Packliste">
+	<section class="section">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">Nicht vergessen</span>
+				<h1>Packliste</h1>
+				<p>Hakt ab, was schon im Koffer ist, oder ergänzt eigene Punkte.</p>
+			</div>
+			<PackingList categories={packing} />
+		</div>
+	</section>
+</Layout>

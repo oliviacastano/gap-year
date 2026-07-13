@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EditableBudgetTable from '../components/EditableBudgetTable.astro';
+import { budgetCategories } from '../data/budget';
+---
+
+<Layout title="Budget">
+	<section class="section">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">Kosten im Überblick</span>
+				<h1>Budget</h1>
+				<p>
+					Beträge in CHF. Tippt auf ein Feld, um es anzupassen, oder fügt neue Posten hinzu —
+					eure Änderungen bleiben auf diesem Gerät gespeichert.
+				</p>
+			</div>
+			<EditableBudgetTable categories={budgetCategories} />
+		</div>
+	</section>
+</Layout>

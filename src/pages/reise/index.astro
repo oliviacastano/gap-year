@@ -1,0 +1,87 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import TripTimeline from '../../components/TripTimeline.astro';
+import Checklist from '../../components/Checklist.astro';
+import { flights } from '../../data/flights';
+import { todos } from '../../data/todos';
+
+function formatDateTime(iso: string, time: string) {
+	const d = new Date(iso).toLocaleDateString('de-CH', { day: '2-digit', month: '2-digit' });
+	return `${d}, ${time}`;
+}
+---
+
+<Layout title="Route">
+	<section class="section">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">Zürich → Bali → Zürich</span>
+				<h1>Unsere Route</h1>
+				<p>Alle fünf Stationen im Überblick — von Canggu bis Uluwatu.</p>
+			</div>
+			<TripTimeline variant="full" />
+		</div>
+	</section>
+
+	<section class="section flights-section">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">Flüge</span>
+				<h2>Anreise & Rückreise</h2>
+			</div>
+			<div class="flights-grid">
+				{
+					flights.map((leg) => (
+						<div class="card card-pad flight-card">
+							<p class="flight-route">
+								{leg.from} → {leg.to}
+							</p>
+							<p class="flight-times">
+								{formatDateTime(leg.date, leg.departTime)} – {leg.arriveTime}
+							</p>
+							<p class="flight-meta">
+								{leg.airline} {leg.flightNumber}
+							</p>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">Nicht ortsgebunden</span>
+				<h2>Allgemeine ToDos</h2>
+				<p>Dinge, die wir irgendwann während der Reise machen wollen — egal in welcher Station.</p>
+			</div>
+			<Checklist storageKey="bali-trip:v1:activities:allgemein" items={todos} />
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.flights-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+		gap: 1.25rem;
+	}
+
+	.flight-route {
+		font-weight: 600;
+		margin-bottom: 0.25rem;
+	}
+
+	.flight-times {
+		color: var(--color-terracotta-dark);
+		font-weight: 600;
+		margin-bottom: 0.15rem;
+	}
+
+	.flight-meta {
+		font-size: 0.85rem;
+		color: var(--color-ink-soft);
+		margin-bottom: 0;
+	}
+</style>
