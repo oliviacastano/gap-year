@@ -1,5 +1,7 @@
 ---
 import type { BudgetCategory, BudgetCategoryId } from '../data/types';
+import { stations } from '../data/stations';
+import { trip } from '../data/trip';
 
 interface Props {
 	categories: BudgetCategory[];
@@ -7,6 +9,11 @@ interface Props {
 
 const { categories } = Astro.props;
 const seedJson = JSON.stringify(categories).replace(/</g, '\\u003c');
+
+const stationsSeed = stations.map((s) => ({ slug: s.slug, name: s.name, activities: s.activities }));
+const stationsSeedJson = JSON.stringify(stationsSeed).replace(/</g, '\\u003c');
+
+const targetTotal = trip.budgetPerPersonCHF * trip.travelers;
 
 const categoryColors: Record<BudgetCategoryId, string> = {
 	fluege: 'var(--color-ocean)',
@@ -17,8 +24,9 @@ const categoryColors: Record<BudgetCategoryId, string> = {
 };
 ---
 
-<budget-table-island>
+<budget-table-island data-budget-target={targetTotal} data-travelers={trip.travelers}>
 	<script type="application/json" data-seed is:inline set:html={seedJson} />
+	<script type="application/json" data-stations-seed is:inline set:html={stationsSeedJson} />
 
 	<div class="budget-summary card card-pad">
 		<div class="budget-summary-head">
@@ -26,6 +34,21 @@ const categoryColors: Record<BudgetCategoryId, string> = {
 			<span class="budget-summary-total" data-total>CHF 0.00</span>
 		</div>
 		<p class="budget-summary-open" data-open></p>
+
+		<div class="budget-target">
+			<div class="budget-target-head">
+				<span>
+					Ziel: CHF {targetTotal.toLocaleString('de-CH')} ({trip.budgetPerPersonCHF.toLocaleString('de-CH')} CHF
+					× {trip.travelers} Personen)
+				</span>
+				<span data-target-percent>0%</span>
+			</div>
+			<div class="progress-bar">
+				<div class="progress-bar-fill" data-target-fill></div>
+			</div>
+			<p class="budget-target-per-person" data-target-per-person>CHF 0.00 pro Person</p>
+		</div>
+
 		<div class="budget-summary-bar">
 			{
 				categories.map((cat) => (
@@ -98,6 +121,35 @@ const categoryColors: Record<BudgetCategoryId, string> = {
 		margin: 0.15rem 0 1.1rem;
 		font-size: 0.85rem;
 		color: var(--color-warning);
+	}
+
+	.budget-target {
+		margin-bottom: 1.3rem;
+	}
+
+	.budget-target-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--color-ink-soft);
+		margin-bottom: 0.4rem;
+	}
+
+	.budget-target-per-person {
+		margin: 0.4rem 0 0;
+		font-size: 0.85rem;
+		color: var(--color-ink-soft);
+	}
+
+	.budget-target-head .is-over-target {
+		color: var(--color-terracotta-dark);
+	}
+
+	.progress-bar-fill.is-over-target {
+		background: linear-gradient(90deg, var(--color-terracotta-dark), var(--color-terracotta));
 	}
 
 	.budget-summary-bar {

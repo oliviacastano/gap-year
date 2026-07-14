@@ -502,6 +502,13 @@ button:focus-visible {
   color: var(--color-terracotta-dark);
 }
 
+.budget-empty-hint {
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  font-style: italic;
+  margin: 0;
+}
+
 /* Day planner */
 
 .checklist-booking {

@@ -18,9 +18,8 @@ const giliTrawangan: StationData = {
     name: 'Willson Retreat',
     address: 'North Beach, Gili Trawangan, Desa Gili Indah, Pemenang, Lombok Utara 83352',
     dateRange: { start: '2026-09-03', end: '2026-09-06' },
-    priceCHF: null,
-    status: 'offen',
-    notes: 'Preis & Buchungsstatus noch offen',
+    priceCHF: 353,
+    status: 'gebucht',
   },
   itinerary: [
     { day: 1, title: 'Anreise / Movie Night' },

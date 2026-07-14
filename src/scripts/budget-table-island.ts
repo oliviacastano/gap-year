@@ -1,4 +1,5 @@
 import { loadOverlay, saveOverlay, makeId } from './storage';
+import { activityStorageKey, mergeActivities, type ActivitySeed, type DayPlanOverlay } from './activity-merge';
 
 interface BudgetLineItemSeed {
   id: string;
@@ -12,6 +13,15 @@ interface BudgetCategorySeed {
   label: string;
   items: BudgetLineItemSeed[];
 }
+
+interface StationActivitySeed {
+  slug: string;
+  name: string;
+  activities: ActivitySeed[];
+}
+
+/** The 'aktivitaeten' category sources its line items dynamically instead of from a static seed. */
+const DYNAMIC_ACTIVITY_CATEGORY = 'aktivitaeten';
 
 interface BudgetCategoryOverlay {
   overrides: Record<string, { amountCHF?: number | null; deleted?: boolean }>;
@@ -33,6 +43,11 @@ class BudgetTableIsland extends HTMLElement {
     const seedScript = this.querySelector<HTMLScriptElement>('script[data-seed]');
     const categories: BudgetCategorySeed[] = seedScript ? JSON.parse(seedScript.textContent || '[]') : [];
 
+    const stationsSeedScript = this.querySelector<HTMLScriptElement>('script[data-stations-seed]');
+    const stationsSeed: StationActivitySeed[] = stationsSeedScript
+      ? JSON.parse(stationsSeedScript.textContent || '[]')
+      : [];
+
     const overlay = loadOverlay<BudgetOverlay>(STORAGE_KEY, { categories: {} });
     const persist = () => saveOverlay(STORAGE_KEY, overlay);
 
@@ -41,14 +56,38 @@ class BudgetTableIsland extends HTMLElement {
       return overlay.categories[catId];
     };
 
+    /** Activities actually scheduled onto a day (any station) — these become editable budget line items. */
+    const scheduledActivityItems = (): BudgetLineItemSeed[] => {
+      const items: BudgetLineItemSeed[] = [];
+      for (const station of stationsSeed) {
+        const activityOverlay = loadOverlay<DayPlanOverlay>(activityStorageKey(station.slug), {
+          overrides: {},
+          custom: [],
+        });
+        for (const activity of mergeActivities(station.activities, activityOverlay)) {
+          if (activity.day === null || activity.day === undefined) continue;
+          items.push({
+            id: activity.id,
+            label: `${activity.label} — ${station.name}, Tag ${activity.day}`,
+            amountCHF: null,
+          });
+        }
+      }
+      return items;
+    };
+
+    const resolveItems = (catId: string): BudgetLineItemSeed[] =>
+      catId === DYNAMIC_ACTIVITY_CATEGORY
+        ? scheduledActivityItems()
+        : (categories.find((c) => c.id === catId)?.items ?? []);
+
     const totalEl = this.querySelector<HTMLElement>('[data-total]');
     const openEl = this.querySelector<HTMLElement>('[data-open]');
 
     const categorySum = (catId: string): number => {
-      const cat = categories.find((c) => c.id === catId);
       const co = catOverlay(catId);
       let sum = 0;
-      for (const item of cat?.items ?? []) {
+      for (const item of resolveItems(catId)) {
         if (co.overrides[item.id]?.deleted) continue;
         const amount = co.overrides[item.id]?.amountCHF !== undefined ? co.overrides[item.id].amountCHF : item.amountCHF;
         if (amount) sum += amount;
@@ -64,7 +103,7 @@ class BudgetTableIsland extends HTMLElement {
       let openCount = 0;
       for (const cat of categories) {
         const co = catOverlay(cat.id);
-        for (const item of cat.items) {
+        for (const item of resolveItems(cat.id)) {
           if (co.overrides[item.id]?.deleted) continue;
           const amount = co.overrides[item.id]?.amountCHF !== undefined ? co.overrides[item.id].amountCHF : item.amountCHF;
           if (amount === null || amount === undefined) openCount += 1;
@@ -77,6 +116,22 @@ class BudgetTableIsland extends HTMLElement {
       }
       if (totalEl) totalEl.textContent = formatCHF(sum);
       if (openEl) openEl.textContent = openCount > 0 ? `+ ${openCount} Posten noch offen` : 'Alle Posten beziffert';
+
+      const target = Number(this.dataset.budgetTarget) || 0;
+      const travelers = Number(this.dataset.travelers) || 1;
+      const targetFillEl = this.querySelector<HTMLElement>('[data-target-fill]');
+      const targetPercentEl = this.querySelector<HTMLElement>('[data-target-percent]');
+      const targetPerPersonEl = this.querySelector<HTMLElement>('[data-target-per-person]');
+      const targetPct = target > 0 ? Math.round((sum / target) * 100) : 0;
+      if (targetFillEl) {
+        targetFillEl.style.width = `${Math.min(targetPct, 100)}%`;
+        targetFillEl.classList.toggle('is-over-target', sum > target);
+      }
+      if (targetPercentEl) {
+        targetPercentEl.textContent = `${targetPct}%`;
+        targetPercentEl.classList.toggle('is-over-target', sum > target);
+      }
+      if (targetPerPersonEl) targetPerPersonEl.textContent = `${formatCHF(sum / travelers)} pro Person`;
 
       for (const cat of categories) {
         const catSum = categorySum(cat.id);
@@ -93,17 +148,23 @@ class BudgetTableIsland extends HTMLElement {
       const list = this.querySelector<HTMLUListElement>(`[data-category="${catId}"]`);
       if (!list) return;
       list.innerHTML = '';
-      const cat = categories.find((c) => c.id === catId);
       const co = catOverlay(catId);
 
       const rows: Array<{ id: string; label: string; note?: string; amountCHF: number | null; custom: boolean }> = [];
-      for (const item of cat?.items ?? []) {
+      for (const item of resolveItems(catId)) {
         if (co.overrides[item.id]?.deleted) continue;
         const amountCHF = co.overrides[item.id]?.amountCHF !== undefined ? co.overrides[item.id].amountCHF! : item.amountCHF;
         rows.push({ id: item.id, label: item.label, note: item.note, amountCHF, custom: false });
       }
       for (const item of co.custom) {
         rows.push({ id: item.id, label: item.label, amountCHF: item.amountCHF, custom: true });
+      }
+
+      if (rows.length === 0 && catId === DYNAMIC_ACTIVITY_CATEGORY) {
+        const empty = document.createElement('p');
+        empty.className = 'budget-empty-hint';
+        empty.textContent = 'Noch keine Aktivität einem Tag zugewiesen — plant welche im Tagesplan einer Station ein.';
+        list.appendChild(empty);
       }
 
       for (const row of rows) {

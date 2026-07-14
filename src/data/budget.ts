@@ -1,4 +1,5 @@
 import { stations } from './stations';
+import { trip } from './trip';
 import type { BudgetCategory } from './types';
 
 const hotelItems = stations.map((s) => ({
@@ -17,7 +18,8 @@ export const budgetCategories: BudgetCategory[] = [
       {
         id: 'fluege-hin-rueck',
         label: 'Flüge Zürich–Bali–Zürich (via Dubai, Emirates)',
-        amountCHF: null,
+        amountCHF: 800 * trip.travelers,
+        note: `800 CHF pro Person × ${trip.travelers}`,
       },
     ],
   },
@@ -28,13 +30,13 @@ export const budgetCategories: BudgetCategory[] = [
     items: hotelItems,
   },
   {
+    // Items are sourced dynamically at runtime from activities scheduled in the
+    // day planner across all stations — see budget-table-island.ts. This static
+    // list only supplies id/label/icon for the category shell.
     id: 'aktivitaeten',
     label: 'Aktivitäten & Touren',
     icon: '🎟️',
-    items: [
-      { id: 'akt-manta-snorkeling', label: 'Snorkeling Tour Manta Point (Nusa Penida)', amountCHF: null },
-      { id: 'akt-zipline', label: 'Zipline (Ubud)', amountCHF: 15 },
-    ],
+    items: [],
   },
   {
     id: 'essen',

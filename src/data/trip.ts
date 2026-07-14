@@ -5,4 +5,6 @@ export const trip = {
   /** Zurich departure, CEST (UTC+2) */
   countdownTargetISO: '2026-08-25T22:00:00+02:00',
   bookingReference: 'ITTNXN',
+  travelers: 2,
+  budgetPerPersonCHF: 3000,
 };
