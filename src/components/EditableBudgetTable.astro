@@ -69,9 +69,10 @@ const categoryColors: Record<BudgetCategoryId, string> = {
 			categories.map((cat) => (
 				<div class="budget-category card card-pad">
 					<div class="budget-category-head">
-						<h3>
-							<span class="budget-category-icon">{cat.icon}</span> {cat.label}
-						</h3>
+						<span class="budget-category-icon" aria-hidden="true">
+							{cat.icon}
+						</span>
+						<h3>{cat.label}</h3>
 						<span class="budget-category-subtotal" data-subtotal={cat.id}>
 							CHF 0.00
 						</span>
@@ -183,17 +184,21 @@ const categoryColors: Record<BudgetCategoryId, string> = {
 
 	.budget-category-head {
 		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
+		align-items: center;
+		gap: 0.6rem;
 		margin-bottom: 1rem;
 	}
 
-	.budget-category-head h3 {
-		margin: 0;
+	.budget-category-icon {
+		flex: none;
+		font-size: 1.3rem;
+		line-height: 1;
 	}
 
-	.budget-category-icon {
-		margin-right: 0.3em;
+	.budget-category-head h3 {
+		flex: 1;
+		min-width: 0;
+		margin: 0;
 	}
 
 	.budget-category-subtotal {

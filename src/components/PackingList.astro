@@ -18,9 +18,10 @@ const seedJson = JSON.stringify(categories).replace(/</g, '\\u003c');
 			categories.map((cat) => (
 				<div class="packing-category card card-pad">
 					<div class="packing-category-head">
-						<h3>
-							<span class="packing-category-icon">{cat.icon}</span> {cat.label}
-						</h3>
+						<span class="packing-category-icon" aria-hidden="true">
+							{cat.icon}
+						</span>
+						<h3>{cat.label}</h3>
 						<span class="packing-category-count" data-category-count={cat.id}>
 							0/0
 						</span>
@@ -42,25 +43,28 @@ const seedJson = JSON.stringify(categories).replace(/</g, '\\u003c');
 <style>
 	.packing-categories {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
 		gap: 1.5rem;
 		margin-top: 2rem;
 	}
 
 	.packing-category-head {
 		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		gap: 0.75rem;
+		align-items: center;
+		gap: 0.6rem;
 		margin-bottom: 1rem;
 	}
 
-	.packing-category-head h3 {
-		margin: 0;
+	.packing-category-icon {
+		flex: none;
+		font-size: 1.3rem;
+		line-height: 1;
 	}
 
-	.packing-category-icon {
-		margin-right: 0.3em;
+	.packing-category-head h3 {
+		flex: 1;
+		min-width: 0;
+		margin: 0;
 	}
 
 	.packing-category-count {
@@ -71,5 +75,22 @@ const seedJson = JSON.stringify(categories).replace(/</g, '\\u003c');
 		background: var(--color-sand);
 		padding: 0.2rem 0.6rem;
 		border-radius: var(--radius-pill);
+	}
+
+	.packing-category .checklist {
+		gap: 0.5rem;
+	}
+
+	@media (min-width: 34rem) {
+		.packing-category .checklist {
+			display: block;
+			columns: 2;
+			column-gap: 1rem;
+		}
+
+		.packing-category .checklist-item {
+			break-inside: avoid;
+			margin-bottom: 0.5rem;
+		}
 	}
 </style>

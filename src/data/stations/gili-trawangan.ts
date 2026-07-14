@@ -28,12 +28,27 @@ const giliTrawangan: StationData = {
     { day: 4, title: 'Schnorcheln / Abreise Nachmittag' },
   ],
   activities: [
-    { id: 'gili-snorkel-tour', label: 'Schnorchel-Tour', description: 'Bootstour zu den besten Schnorchel-Spots rund um die Insel.', booking: 'Tour vor Ort oder online buchen' },
+    { id: 'gili-snorkel-tour', label: 'Schnorchel-Tour zu allen 3 Inseln', description: 'Bootstour zu den besten Schnorchel-Spots rund um die drei Gili-Inseln.', booking: 'Tour vor Ort oder online buchen' },
     { id: 'gili-turtle-point', label: 'Turtle Point', description: 'Beliebte Stelle, um Meeresschildkröten beim Schnorcheln zu sehen.', booking: 'Kein Ticket nötig, frei zugänglich' },
     { id: 'gili-aston-movie-night', label: 'Aston Movie Night', description: 'Open-Air-Kinoabend am Strand.', booking: 'Programm vor Ort prüfen' },
-    { id: 'gili-bora-bora-beach-club', label: 'Bora Bora Beach Club', description: 'Beliebter Beach Club mit Live-Musik und Sonnenuntergang.', booking: 'Tisch vorab reservieren, v. a. am Wochenende' },
+    { id: 'gili-bora-bora-beach-club', label: 'Bora Bora Beach Club', description: 'Beliebter Beach Club, auch schön für den Sonnenuntergang.', booking: 'Tisch vorab reservieren, v. a. am Wochenende' },
+    { id: 'gili-pink-sunset-kiss', label: 'Pink Sunset Kiss' },
+    { id: 'gili-biking', label: 'Biking', description: 'Die Insel ist autofrei — am besten mit dem Fahrrad erkunden.', booking: 'Fahrrad vor Ort mieten' },
+    { id: 'gili-bongkas-beach', label: 'Bongkas Beach', description: 'Schöner, ruhigerer Strandabschnitt.' },
+    { id: 'gili-paddling', label: 'Paddeln', description: 'SUP entlang der Küste.', booking: 'SUP-Board vor Ort mieten' },
+    { id: 'gili-sunrise-paddleboard', label: 'Sunrise-Paddleboard-Tour', description: 'Frühmorgens mit dem SUP-Board raus, bevor die Insel erwacht.', booking: 'SUP-Board/Tour vor Ort buchen' },
   ],
-  restaurants: [],
+  restaurants: [
+    { name: 'The Banyan Tree' },
+    { name: 'Papaya' },
+    { name: 'PokeGiliAir' },
+    { name: 'Kopi Susu' },
+    { name: 'Il Baretto' },
+    { name: 'Amsterdam' },
+    { name: 'The Shack Restaurant' },
+    { name: 'La Dakocan', note: 'Ocean Bar mit Blick aufs Meer' },
+    { name: 'Mowies', note: 'Schöner Spot für den Sonnenuntergang' },
+  ],
 };
 
 export default giliTrawangan;
