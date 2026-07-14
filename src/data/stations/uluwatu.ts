@@ -9,7 +9,7 @@ const uluwatu: StationData = {
     'Uluwatu ist Balis dramatische Südspitze: hohe Kalksteinklippen, Weltklasse-Wellen und Sonnenuntergänge, die den ganzen Himmel in Orange tauchen. Zum Ausklang der Reise genießen wir hier Strände, Cliff-Restaurants und den entspannten Surfer-Vibe.',
   area:
     'Unsere Villa liegt oberhalb der Klippen von Bingin — von hier sind es nur wenige Minuten zu Fuß zu den Treppen, die runter an den Strand führen.',
-  mapPosition: { x: 33, y: 72 },
+  mapQuery: 'Uluwatu, Bali, Indonesia',
   dateRange: { start: '2026-09-07', end: '2026-09-11' },
   nights: 4,
   icon: '🌅',

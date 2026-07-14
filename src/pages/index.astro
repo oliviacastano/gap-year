@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Countdown from '../components/Countdown.astro';
 import TripTimeline from '../components/TripTimeline.astro';
 import ImageOrPlaceholder from '../components/ImageOrPlaceholder.astro';
+import GoogleMap from '../components/GoogleMap.astro';
 import { trip } from '../data/trip';
 
 function formatDate(iso: string) {
@@ -46,6 +47,17 @@ function formatDate(iso: string) {
 			<div class="stations-cta">
 				<a class="btn btn-ghost" href="/reise">Ganze Route ansehen →</a>
 			</div>
+		</div>
+	</section>
+
+	<section class="section map-overview-section">
+		<div class="container">
+			<div class="section-head">
+				<span class="eyebrow">Auf der Karte</span>
+				<h2>Alle Orte im Überblick</h2>
+				<p>Canggu, Ubud, Uluwatu, Nusa Penida und Gili Trawangan — rein- und rauszoomen für Details.</p>
+			</div>
+			<GoogleMap query="Bali, Indonesia" zoom={9} height="28rem" />
 		</div>
 	</section>
 </Layout>

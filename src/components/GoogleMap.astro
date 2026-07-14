@@ -1,0 +1,35 @@
+---
+interface Props {
+	/** Place name to search for, e.g. 'Canggu, Bali, Indonesia' */
+	query: string;
+	zoom?: number;
+	height?: string;
+}
+
+const { query, zoom = 13, height = '22rem' } = Astro.props;
+const src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&z=${zoom}&output=embed`;
+---
+
+<div class="google-map card" style={`--map-height: ${height};`}>
+	<iframe
+		src={src}
+		title={`Karte: ${query}`}
+		loading="lazy"
+		referrerpolicy="no-referrer-when-downgrade"
+		allowfullscreen
+	></iframe>
+</div>
+
+<style>
+	.google-map {
+		overflow: hidden;
+		border-radius: var(--radius-card);
+	}
+
+	.google-map iframe {
+		display: block;
+		width: 100%;
+		height: var(--map-height);
+		border: 0;
+	}
+</style>

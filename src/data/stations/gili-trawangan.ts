@@ -9,7 +9,7 @@ const giliTrawangan: StationData = {
     'Gili Trawangan ist die kleine, autofreie Trauminsel: keine Motoren, dafür Pferdekutschen, türkises Wasser und Sonnenuntergänge, die man nie vergisst. Hier schnorcheln wir zwischen Schildkröten und lassen es zwischendurch einfach mal richtig langsam angehen.',
   area:
     'Die Insel ist so klein, dass man sie in einer guten Stunde zu Fuß umrunden kann — unser Hotel ist unser ruhiger Ausgangspunkt für Strandtage und Schnorchel-Ausflüge.',
-  mapPosition: { x: 78, y: 30 },
+  mapQuery: 'Gili Trawangan, Indonesia',
   dateRange: { start: '2026-09-03', end: '2026-09-06' },
   nights: 3,
   icon: '🐢',

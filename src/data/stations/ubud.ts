@@ -9,7 +9,7 @@ const ubud: StationData = {
     'Ubud ist das grüne Herz Balis: schier endlose Reisterrassen, dichter Dschungel, Wasserfälle und dieser unverwechselbar ruhige, spirituelle Vibe. Hier verlangsamen wir das Tempo — zwischen Wasserfall-Abenteuern, einer Vulkan-Wanderung und Streetfood-Cafés mit Blick ins Grüne.',
   area:
     'Unsere Villa liegt etwas außerhalb des turbulenten Zentrums, ruhig zwischen Reisfeldern — ideal, um abends die Grillen zu hören und tagsüber in wenigen Minuten mitten im Ubud-Trubel zu sein.',
-  mapPosition: { x: 42, y: 42 },
+  mapQuery: 'Ubud, Bali, Indonesia',
   dateRange: { start: '2026-08-30', end: '2026-09-03' },
   nights: 4,
   icon: '🌾',

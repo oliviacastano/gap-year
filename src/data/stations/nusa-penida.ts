@@ -9,7 +9,7 @@ const nusaPenida: StationData = {
     'Nusa Penida ist Balis wilde Schwester: schroffe Klippen, türkise Buchten und Aussichten wie aus dem Reisekatalog. Für unseren kurzen Zwischenstopp heißt es: möglichst viele der spektakulären Strände abklappern und einmal mit Mantarochen schwimmen.',
   area:
     'Unser Resort liegt an der Küste, praktisch gelegen für Tagestouren zu den berühmten Aussichtspunkten der Insel — die Straßen hier sind kurvig, also planen wir für jede Strecke etwas mehr Zeit ein.',
-  mapPosition: { x: 62, y: 68 },
+  mapQuery: 'Nusa Penida, Bali, Indonesia',
   dateRange: { start: '2026-09-06', end: '2026-09-07' },
   nights: 1,
   icon: '🏝️',

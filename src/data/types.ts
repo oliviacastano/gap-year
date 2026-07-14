@@ -86,13 +86,6 @@ export interface PackingCategory {
 
 export type AccentColor = 'terracotta' | 'ocean' | 'jungle' | 'sand';
 
-export interface MapPosition {
-  /** percentage across the shared BaliMap viewBox, 0–100 */
-  x: number;
-  /** percentage down the shared BaliMap viewBox, 0–100 */
-  y: number;
-}
-
 export interface StationData {
   slug: string;
   name: string;
@@ -102,7 +95,8 @@ export interface StationData {
   intro: string;
   /** Short description of the neighbourhood/area the hotel sits in */
   area: string;
-  mapPosition: MapPosition;
+  /** Google Maps search query for this station, e.g. 'Canggu, Bali, Indonesia' */
+  mapQuery: string;
   dateRange: DateRange;
   nights: number;
   icon: string;

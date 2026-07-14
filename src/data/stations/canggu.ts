@@ -9,7 +9,7 @@ const canggu: StationData = {
     'Canggu ist unser Softlanding auf Bali: Surf-Breaks, Beach Clubs bei Sonnenuntergang und ein Stadtteil voller Cafés, Boutiquen und Streetstyle. Hier holen wir uns den ersten Inselflow – zwischen Wellenreiten am Vormittag und Cocktails mit Blick aufs Meer am Abend.',
   area:
     'Unser Hotel liegt im Herzen von Canggu, nur wenige Gehminuten vom Batu Bolong Beach entfernt — umgeben von Reisfeldern, Surfshops und den angesagtesten Cafés der Gegend.',
-  mapPosition: { x: 28, y: 55 },
+  mapQuery: 'Canggu, Bali, Indonesia',
   dateRange: { start: '2026-08-26', end: '2026-08-30' },
   nights: 4,
   icon: '🏄',

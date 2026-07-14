@@ -2,7 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import ImageOrPlaceholder from '../../components/ImageOrPlaceholder.astro';
 import HotelInfo from '../../components/HotelInfo.astro';
-import BaliMap from '../../components/BaliMap.astro';
+import GoogleMap from '../../components/GoogleMap.astro';
 import DayPlanner from '../../components/DayPlanner.astro';
 import RestaurantList from '../../components/RestaurantList.astro';
 import { stations } from '../../data/stations';
@@ -60,7 +60,7 @@ function formatDate(iso: string) {
 				<span class="eyebrow">Wo wir sind</span>
 				<h2>Karte</h2>
 			</div>
-			<BaliMap activeSlug={station.slug} />
+			<GoogleMap query={station.mapQuery} zoom={13} />
 		</div>
 	</section>
 
