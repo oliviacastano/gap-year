@@ -11,3 +11,15 @@ export function findPublicImage(relNoExt: string): string | null {
   }
   return null;
 }
+
+/** Build-time only — finds public/<dirRel>/<slug>-N.{jpg,jpeg,png,webp}, sorted by N. */
+export function findNumberedImages(dirRel: string, slug: string): string[] {
+  const dir = path.join(PUBLIC_DIR, dirRel);
+  if (!fs.existsSync(dir)) return [];
+  const pattern = new RegExp(`^${slug}-(\\d+)\\.(jpg|jpeg|png|webp)$`, 'i');
+  return fs
+    .readdirSync(dir)
+    .filter((f) => pattern.test(f))
+    .sort((a, b) => Number(a.match(pattern)![1]) - Number(b.match(pattern)![1]))
+    .map((f) => `/${dirRel}/${f}`);
+}

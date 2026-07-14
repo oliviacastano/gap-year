@@ -1,0 +1,52 @@
+---
+import { findNumberedImages } from '../lib/images';
+import type { AccentColor } from '../data/types';
+
+interface Props {
+	slug: string;
+	label: string;
+	icon: string;
+	accent: AccentColor;
+}
+
+const { slug, label, icon, accent } = Astro.props;
+const images = findNumberedImages('images/hotels', slug);
+---
+
+{
+	images.length > 0 ? (
+		<hotel-slider class="hotel-slider">
+			<div class="hotel-slider-track">
+				{images.map((src, i) => (
+					<div class="hotel-slider-slide">
+						<img src={src} alt={`${label}, Foto ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} />
+					</div>
+				))}
+			</div>
+			{images.length > 1 && (
+				<>
+					<button type="button" class="hotel-slider-nav hotel-slider-prev" aria-label="Vorheriges Foto">
+						‹
+					</button>
+					<button type="button" class="hotel-slider-nav hotel-slider-next" aria-label="Nächstes Foto">
+						›
+					</button>
+					<div class="hotel-slider-dots">
+						{images.map((_, i) => (
+							<span class="hotel-slider-dot" data-index={i} />
+						))}
+					</div>
+				</>
+			)}
+		</hotel-slider>
+	) : (
+		<div class={`placeholder-tile hotel-slider-placeholder accent-${accent}`}>
+			<span class="placeholder-icon" aria-hidden="true">
+				{icon}
+			</span>
+			<span class="placeholder-label">{label}</span>
+			<span class="placeholder-note">Platzhalter — noch keine Hotelfotos</span>
+		</div>
+	)
+}
+<script src="../scripts/hotel-slider.ts"></script>

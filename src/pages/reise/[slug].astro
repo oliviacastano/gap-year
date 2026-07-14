@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import ImageOrPlaceholder from '../../components/ImageOrPlaceholder.astro';
 import HotelInfo from '../../components/HotelInfo.astro';
+import HotelImageSlider from '../../components/HotelImageSlider.astro';
 import GoogleMap from '../../components/GoogleMap.astro';
 import DayPlanner from '../../components/DayPlanner.astro';
 import RestaurantList from '../../components/RestaurantList.astro';
@@ -68,6 +69,7 @@ function formatDate(iso: string) {
 		<div class="container hotel-area-grid">
 			<div>
 				<h2>Hotel</h2>
+				<HotelImageSlider slug={station.slug} label={station.hotel.name} icon={station.icon} accent={station.accent} />
 				<HotelInfo hotel={station.hotel} />
 			</div>
 			<div>

@@ -15,11 +15,11 @@ const giliTrawangan: StationData = {
   icon: '🐢',
   accent: 'ocean',
   hotel: {
-    name: 'noch offen',
+    name: 'Willson Retreat',
     dateRange: { start: '2026-09-03', end: '2026-09-06' },
     priceCHF: null,
     status: 'offen',
-    notes: 'Hotel noch nicht gebucht',
+    notes: 'Preis & Buchungsstatus noch offen',
   },
   itinerary: [
     { day: 1, title: 'Anreise / Movie Night' },

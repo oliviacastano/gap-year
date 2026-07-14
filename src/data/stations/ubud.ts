@@ -19,6 +19,7 @@ const ubud: StationData = {
     dateRange: { start: '2026-08-30', end: '2026-09-03' },
     priceCHF: 480.38,
     status: 'gebucht',
+    link: 'https://www.booking.com/hotel/id/the-clifton-ubud-valley-villas.de.html?checkin=2026-08-30&checkout=2026-09-03',
   },
   itinerary: [
     { day: 1, title: 'Anreise / Schaukel, Monkey Forest, Rice Terraces' },

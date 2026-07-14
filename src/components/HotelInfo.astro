@@ -30,6 +30,13 @@ const statusLabel: Record<Hotel['status'], string> = {
 		{hotel.priceCHF !== null ? `CHF ${hotel.priceCHF.toFixed(2)}` : 'Preis noch offen'}
 	</p>
 	{hotel.notes && <p class="hotel-notes">{hotel.notes}</p>}
+	{
+		hotel.link && (
+			<a class="btn btn-ghost hotel-link" href={hotel.link} target="_blank" rel="noopener noreferrer">
+				Fotos & Details ansehen →
+			</a>
+		)
+	}
 </div>
 
 <style>
@@ -62,5 +69,9 @@ const statusLabel: Record<Hotel['status'], string> = {
 		font-size: 0.85rem;
 		color: var(--color-ink-soft);
 		margin: 0.4rem 0 0;
+	}
+
+	.hotel-link {
+		margin-top: 1rem;
 	}
 </style>
