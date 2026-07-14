@@ -9,6 +9,7 @@ export interface DateRange {
 
 export interface Hotel {
   name: string;
+  address?: string;
   dateRange: DateRange;
   priceCHF: number | null;
   status: BookingStatus;

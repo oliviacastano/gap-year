@@ -16,6 +16,7 @@ const canggu: StationData = {
   accent: 'terracotta',
   hotel: {
     name: 'Sense Canggu Beach Hotel',
+    address: 'Jl. Munduk Kedungu No.55s, Pererenan, Kec. Mengwi, Kabupaten Badung, Bali',
     dateRange: { start: '2026-08-26', end: '2026-08-30' },
     priceCHF: 170.27,
     status: 'gebucht',

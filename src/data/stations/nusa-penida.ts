@@ -16,6 +16,7 @@ const nusaPenida: StationData = {
   accent: 'terracotta',
   hotel: {
     name: 'Sea La Vie Resort Nusa Penida',
+    address: 'Jl. Toya Pakeh, Nusa Penida, Klungkung, Bali 80771',
     dateRange: { start: '2026-09-06', end: '2026-09-07' },
     priceCHF: 79.68,
     status: 'gebucht',

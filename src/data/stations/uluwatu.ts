@@ -16,6 +16,7 @@ const uluwatu: StationData = {
   accent: 'ocean',
   hotel: {
     name: 'Canang Villas Bingin',
+    address: 'Gang Melali, Jl. Buana Sari, Pecatu, Uluwatu, Bali 80361',
     dateRange: { start: '2026-09-07', end: '2026-09-11' },
     priceCHF: 515.62,
     status: 'gebucht',

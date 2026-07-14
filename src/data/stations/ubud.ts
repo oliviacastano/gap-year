@@ -16,6 +16,7 @@ const ubud: StationData = {
   accent: 'jungle',
   hotel: {
     name: 'The Clifton Villas Ubud',
+    address: 'Jl. Mawar, Keliki, Kec. Tegallalang, Kabupaten Gianyar, Bali 80571',
     dateRange: { start: '2026-08-30', end: '2026-09-03' },
     priceCHF: 480.38,
     status: 'gebucht',
