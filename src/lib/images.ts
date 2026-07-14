@@ -11,15 +11,3 @@ export function findPublicImage(relNoExt: string): string | null {
   }
   return null;
 }
-
-/** Build-time only — finds public/images/gallery/<stationSlug>-N.{jpg,jpeg,png,webp}, sorted by N. */
-export function findGalleryImages(stationSlug: string): string[] {
-  const dir = path.join(PUBLIC_DIR, 'images/gallery');
-  if (!fs.existsSync(dir)) return [];
-  const pattern = new RegExp(`^${stationSlug}-(\\d+)\\.(jpg|jpeg|png|webp)$`, 'i');
-  return fs
-    .readdirSync(dir)
-    .filter((f) => pattern.test(f))
-    .sort((a, b) => Number(a.match(pattern)![1]) - Number(b.match(pattern)![1]))
-    .map((f) => `/images/gallery/${f}`);
-}
