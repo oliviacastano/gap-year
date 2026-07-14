@@ -119,20 +119,22 @@ class BudgetTableIsland extends HTMLElement {
 
       const target = Number(this.dataset.budgetTarget) || 0;
       const travelers = Number(this.dataset.travelers) || 1;
-      const targetFillEl = this.querySelector<HTMLElement>('[data-target-fill]');
       const targetPercentEl = this.querySelector<HTMLElement>('[data-target-percent]');
       const targetPerPersonEl = this.querySelector<HTMLElement>('[data-target-per-person]');
       const targetPct = target > 0 ? Math.round((sum / target) * 100) : 0;
-      if (targetFillEl) {
-        targetFillEl.style.width = `${Math.min(targetPct, 100)}%`;
-        targetFillEl.classList.toggle('is-over-target', sum > target);
-      }
+      const isOverTarget = sum > target;
       if (targetPercentEl) {
         targetPercentEl.textContent = `${targetPct}%`;
-        targetPercentEl.classList.toggle('is-over-target', sum > target);
+        targetPercentEl.classList.toggle('is-over-target', isOverTarget);
       }
-      if (targetPerPersonEl) targetPerPersonEl.textContent = `${formatCHF(sum / travelers)} pro Person`;
+      if (targetPerPersonEl) {
+        targetPerPersonEl.textContent = `${formatCHF(sum / travelers)}`;
+        targetPerPersonEl.classList.toggle('is-over-target', isOverTarget);
+      }
 
+      // Bar segments show each category's share of the target budget, not of the amount
+      // spent so far — so the filled portion of the bar always reads as "how much of our
+      // goal is used", and the empty track is remaining headroom.
       for (const cat of categories) {
         const catSum = categorySum(cat.id);
         const subtotalEl = this.querySelector<HTMLElement>(`[data-subtotal="${cat.id}"]`);
@@ -140,7 +142,7 @@ class BudgetTableIsland extends HTMLElement {
         const legendEl = this.querySelector<HTMLElement>(`[data-legend-amount="${cat.id}"]`);
         if (legendEl) legendEl.textContent = formatCHF(catSum);
         const segmentEl = this.querySelector<HTMLElement>(`[data-segment="${cat.id}"]`);
-        if (segmentEl) segmentEl.style.width = sum > 0 ? `${Math.max((catSum / sum) * 100, catSum > 0 ? 2 : 0)}%` : '0%';
+        if (segmentEl) segmentEl.style.width = target > 0 && catSum > 0 ? `${Math.max((catSum / target) * 100, 1)}%` : '0%';
       }
     };
 

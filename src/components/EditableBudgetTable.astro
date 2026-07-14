@@ -30,32 +30,23 @@ const categoryColors: Record<BudgetCategoryId, string> = {
 
 	<div class="budget-summary card card-pad">
 		<div class="budget-summary-head">
-			<span>Gesamt</span>
+			<span>Ausgegeben</span>
 			<span class="budget-summary-total" data-total>CHF 0.00</span>
 		</div>
-		<p class="budget-summary-open" data-open></p>
+		<p class="budget-summary-sub">
+			von <strong>CHF {targetTotal.toLocaleString('de-CH')}</strong> Ziel (<span data-target-percent>0%</span>) ·
+			<span data-target-per-person>CHF 0.00</span> pro Person
+		</p>
 
-		<div class="budget-target">
-			<div class="budget-target-head">
-				<span>
-					Ziel: CHF {targetTotal.toLocaleString('de-CH')} ({trip.budgetPerPersonCHF.toLocaleString('de-CH')} CHF
-					× {trip.travelers} Personen)
-				</span>
-				<span data-target-percent>0%</span>
-			</div>
-			<div class="progress-bar">
-				<div class="progress-bar-fill" data-target-fill></div>
-			</div>
-			<p class="budget-target-per-person" data-target-per-person>CHF 0.00 pro Person</p>
-		</div>
-
-		<div class="budget-summary-bar">
+		<div class="budget-summary-bar" title={`Ziel: ${trip.budgetPerPersonCHF.toLocaleString('de-CH')} CHF × ${trip.travelers} Personen`}>
 			{
 				categories.map((cat) => (
 					<div class="budget-summary-segment" data-segment={cat.id} style={`background:${categoryColors[cat.id]};`} />
 				))
 			}
 		</div>
+		<p class="budget-summary-open" data-open></p>
+
 		<div class="budget-summary-legend">
 			{
 				categories.map((cat) => (
@@ -117,45 +108,25 @@ const categoryColors: Record<BudgetCategoryId, string> = {
 		color: var(--color-terracotta-dark);
 	}
 
-	.budget-summary-open {
-		margin: 0.15rem 0 1.1rem;
-		font-size: 0.85rem;
-		color: var(--color-warning);
-	}
-
-	.budget-target {
-		margin-bottom: 1.3rem;
-	}
-
-	.budget-target-head {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		gap: 1rem;
-		font-size: 0.85rem;
-		font-weight: 600;
-		color: var(--color-ink-soft);
-		margin-bottom: 0.4rem;
-	}
-
-	.budget-target-per-person {
-		margin: 0.4rem 0 0;
-		font-size: 0.85rem;
+	.budget-summary-sub {
+		margin: 0.15rem 0 1rem;
+		font-size: 0.9rem;
 		color: var(--color-ink-soft);
 	}
 
-	.budget-target-head .is-over-target {
+	.budget-summary-sub strong {
+		color: var(--color-ink);
+	}
+
+	.budget-summary-sub .is-over-target {
 		color: var(--color-terracotta-dark);
-	}
-
-	.progress-bar-fill.is-over-target {
-		background: linear-gradient(90deg, var(--color-terracotta-dark), var(--color-terracotta));
+		font-weight: 600;
 	}
 
 	.budget-summary-bar {
 		display: flex;
 		width: 100%;
-		height: 0.7rem;
+		height: 0.9rem;
 		border-radius: var(--radius-pill);
 		overflow: hidden;
 		background: var(--color-sand-dark);
@@ -167,11 +138,19 @@ const categoryColors: Record<BudgetCategoryId, string> = {
 		transition: width 0.25s ease;
 	}
 
+	.budget-summary-open {
+		margin: 0.6rem 0 0;
+		font-size: 0.85rem;
+		color: var(--color-warning);
+	}
+
 	.budget-summary-legend {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
 		gap: 0.5rem 1rem;
 		margin-top: 1.1rem;
+		padding-top: 1.1rem;
+		border-top: 1px solid var(--color-border);
 	}
 
 	.budget-legend-item {

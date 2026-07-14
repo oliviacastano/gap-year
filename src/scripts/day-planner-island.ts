@@ -1,5 +1,6 @@
 import { loadOverlay, saveOverlay, makeId } from './storage';
 import { mergeActivities, type ActivitySeed, type DayPlanOverlay, type MergedActivity } from './activity-merge';
+import { getActivityPrice, setActivityPrice } from './activity-budget';
 
 interface DayNoteSeed {
 	day: number;
@@ -71,6 +72,25 @@ class DayPlannerIsland extends HTMLElement {
 
 			const actions = document.createElement('div');
 			actions.className = 'day-planner-actions';
+
+			const priceWrap = document.createElement('div');
+			priceWrap.className = 'day-planner-price';
+			const priceCurrency = document.createElement('span');
+			priceCurrency.className = 'budget-currency';
+			priceCurrency.textContent = 'CHF';
+			const priceInput = document.createElement('input');
+			priceInput.type = 'number';
+			priceInput.step = '0.01';
+			priceInput.placeholder = '0.00';
+			priceInput.setAttribute('aria-label', `Preis für ${item.label}`);
+			const existingPrice = getActivityPrice(item.id);
+			if (existingPrice !== null) priceInput.value = String(existingPrice);
+			priceInput.addEventListener('input', () => {
+				const value = priceInput.value.trim() === '' ? null : Number(priceInput.value);
+				setActivityPrice(item.id, value);
+			});
+			priceWrap.append(priceCurrency, priceInput);
+			actions.appendChild(priceWrap);
 
 			if (opts.inDay) {
 				const backBtn = document.createElement('button');

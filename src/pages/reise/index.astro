@@ -4,7 +4,6 @@ import TripTimeline from '../../components/TripTimeline.astro';
 import Checklist from '../../components/Checklist.astro';
 import { flights } from '../../data/flights';
 import { todos } from '../../data/todos';
-import { stations } from '../../data/stations';
 
 function formatDateTime(iso: string, time: string) {
 	const d = new Date(iso).toLocaleDateString('de-CH', { day: '2-digit', month: '2-digit' });
@@ -15,25 +14,10 @@ function formatDateTime(iso: string, time: string) {
 <Layout title="Route">
 	<section class="section">
 		<div class="container">
-			<div class="section-head route-head">
-				<div>
-					<span class="eyebrow">Zürich → Bali → Zürich</span>
-					<h1>Unsere Route</h1>
-					<p>Alle fünf Stationen im Überblick — von Canggu bis Uluwatu.</p>
-				</div>
-				<div class="route-jump">
-					<label for="route-jump-select">Direkt zu einer Station</label>
-					<select id="route-jump-select">
-						<option value="">Station wählen…</option>
-						{
-							stations.map((station) => (
-								<option value={`/reise/${station.slug}`}>
-									{station.icon} {station.name}
-								</option>
-							))
-						}
-					</select>
-				</div>
+			<div class="section-head">
+				<span class="eyebrow">Zürich → Bali → Zürich</span>
+				<h1>Unsere Route</h1>
+				<p>Alle fünf Stationen im Überblick — von Canggu bis Uluwatu.</p>
 			</div>
 			<TripTimeline variant="full" />
 		</div>
@@ -77,44 +61,7 @@ function formatDateTime(iso: string, time: string) {
 	</section>
 </Layout>
 
-<script>
-	const routeJumpSelect = document.getElementById('route-jump-select') as HTMLSelectElement | null;
-	routeJumpSelect?.addEventListener('change', () => {
-		if (routeJumpSelect.value) window.location.href = routeJumpSelect.value;
-	});
-</script>
-
 <style>
-	.route-head {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: flex-end;
-		justify-content: space-between;
-		gap: 1.5rem;
-		max-width: none;
-	}
-
-	.route-jump {
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-	}
-
-	.route-jump label {
-		font-size: 0.8rem;
-		font-weight: 600;
-		color: var(--color-ink-soft);
-	}
-
-	.route-jump select {
-		padding: 0.6rem 0.9rem;
-		border-radius: var(--radius-pill);
-		border: 1px solid var(--color-border);
-		background: var(--color-white);
-		font-family: inherit;
-		font-size: 0.9rem;
-		min-width: 14rem;
-	}
 	.flights-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
