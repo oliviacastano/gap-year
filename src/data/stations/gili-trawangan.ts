@@ -21,12 +21,7 @@ const giliTrawangan: StationData = {
     priceCHF: 353,
     status: 'gebucht',
   },
-  itinerary: [
-    { day: 1, title: 'Anreise / Movie Night' },
-    { day: 2, title: 'Schnorchel-Tour' },
-    { day: 3, title: 'Komodo-Insel-Tour' },
-    { day: 4, title: 'Schnorcheln / Abreise Nachmittag' },
-  ],
+  itinerary: [],
   activities: [
     { id: 'gili-snorkel-tour', label: 'Schnorchel-Tour zu allen 3 Inseln', description: 'Bootstour zu den besten Schnorchel-Spots rund um die drei Gili-Inseln.', booking: 'Tour vor Ort oder online buchen' },
     { id: 'gili-turtle-point', label: 'Turtle Point', description: 'Beliebte Stelle, um Meeresschildkröten beim Schnorcheln zu sehen.', booking: 'Kein Ticket nötig, frei zugänglich' },
